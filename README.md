@@ -1,47 +1,15 @@
 # Notepad
 
-A cross-platform note-taking application built with SwiftUI and Convex, featuring real-time sync across iOS and macOS devices.
+A cross-platform notepad built with SwiftUI, Convex, and Better Auth.
 
-## Features
-
-- **Cross-Platform**: Native iOS and macOS apps with shared business logic
-- **Real-Time Sync**: Instant synchronization across all your devices using Convex
-- **Auto-Save**: Automatic saving with debounced updates to prevent data loss
-- **Authentication**: Secure user authentication with BetterAuth
-- **Clean UI**: Platform-specific interfaces optimized for iOS and macOS
-- **Keyboard Shortcuts**: macOS-native keyboard shortcuts for power users
-- **Search**: Searchable notes with quick access menu
-
-## Tech Stack
-
-### Frontend
-- **Language**: Swift
-- **Framework**: SwiftUI
-- **Platforms**: iOS 16.0+, macOS 13.0+
-- **Dependencies**:
-  - ConvexMobile (real-time database client)
-  - BetterAuth (authentication)
-
-### Backend
-- **Platform**: Convex (serverless backend)
-- **Language**: TypeScript
-- **Database**: Convex real-time database
-- **Authentication**: BetterAuth with custom provider
-
-## Prerequisites
-
-- Xcode 14.0 or later
-- macOS 13.0 or later (for development)
-- Node.js 16+ and npm
-- A Convex account (sign up at [convex.dev](https://convex.dev))
-- A BetterAuth server (or deploy your own)
+The Convex Swift SDK does not yet natively support BetterAuth, so this project shows how to make that work.
 
 ## Installation
 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/notepad.git
+git clone https://github.com/bbauman1/notepad.git
 cd notepad
 ```
 
@@ -72,9 +40,9 @@ CONVEX_DEPLOYMENT=dev:your-deployment-name
 CONVEX_URL=https://your-deployment-name.convex.cloud
 ```
 
-### 4. Configure Auth Server (Optional)
+### 4. Configure Auth Server
 
-If you're running your own BetterAuth server, update the URLs in:
+I have a separate repo for the auth server, located [here](https://github.com/bbauman1/notepad-auth):
 - `Notepad/Config/Config.swift` - Update `authServerURL`
 - `convex/auth.config.ts` - Update `domain`
 
@@ -104,64 +72,10 @@ npx convex dev
 2. In Xcode, select your target device (iOS Simulator or Mac)
 3. Press `Cmd+R` to build and run
 
-### Production Deployment
-
-1. Deploy your Convex backend:
-```bash
-npx convex deploy
-```
-
-2. Update `Config.swift` to use your production Convex URL
-3. Archive and distribute your app through Xcode
-
-## Project Structure
-
-```
-Notepad/
-├── Notepad/                    # iOS/macOS app source
-│   ├── Config/                 # Configuration files
-│   ├── Models/                 # Data models (Note, User)
-│   ├── Services/               # Business logic
-│   │   ├── AuthService.swift           # Authentication management
-│   │   ├── ConvexService.swift         # Convex client wrapper
-│   │   ├── BetterAuthProvider.swift    # OAuth provider
-│   │   ├── AutoSaveService.swift       # Auto-save functionality
-│   │   └── NoteSubscriptionService.swift # Real-time sync
-│   ├── Views/                  # SwiftUI views
-│   │   ├── Shared/             # Cross-platform views
-│   │   ├── iOS/                # iOS-specific views
-│   │   └── macOS/              # macOS-specific views
-│   ├── Utilities/              # Helper utilities
-│   └── NotepadApp.swift        # App entry point
-│
-├── convex/                     # Backend code
-│   ├── schema.ts               # Database schema
-│   ├── notes.ts                # CRUD operations
-│   ├── auth.config.ts          # Auth configuration
-│   └── lib/                    # Helper utilities
-│
-└── package.json                # Node.js dependencies
-```
-
-## Architecture
-
-### Frontend
-- **State Management**: SwiftUI's `@StateObject` and `@EnvironmentObject`
-- **Authentication Flow**: BetterAuth OAuth → JWT in Keychain → Convex Login
-- **Real-Time Sync**: ConvexMobile WebSocket subscriptions
-- **Platform-Specific**: Separate view implementations for iOS and macOS
-
-### Backend
-- **Database**: Single `notes` table with user-based access control
-- **Security**: Server-side auth verification via `getAuthUserId()`
-- **Real-Time**: Automatic WebSocket updates via Convex queries
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Acknowledgments
+## Acknowledgements
 
-- Built with [SwiftUI](https://developer.apple.com/xcode/swiftui/)
-- Backend powered by [Convex](https://convex.dev)
-- Authentication via [BetterAuth](https://www.better-auth.com)
+- Thank you to [BetterAuthSwift](https://github.com/ouwargui/BetterAuthSwift) for making the basic BetterAuth connection much simpler.
