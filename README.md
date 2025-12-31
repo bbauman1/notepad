@@ -4,6 +4,8 @@ A cross-platform notepad built with SwiftUI, Convex, and Better Auth.
 
 The Convex Swift SDK does not yet natively support BetterAuth, so this project shows how to integrate the two.
 
+https://github.com/user-attachments/assets/ede297fa-e118-479a-9af7-c0f6407b5fe9
+
 ## Installation
 
 ### 1. Clone the Repository
